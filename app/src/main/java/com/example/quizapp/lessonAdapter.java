@@ -118,7 +118,7 @@ public class lessonAdapter extends BaseAdapter {
     }
     public void AllOnClick(View v){
       //  Toast.makeText(v.getContext(),"next screen", Toast.LENGTH_SHORT).show();
-        context.startActivity(new Intent(v.getContext(),QuizActivity.class));
+        context.startActivity(new Intent(v.getContext(),amount_to_test.class));
 
     }
 }

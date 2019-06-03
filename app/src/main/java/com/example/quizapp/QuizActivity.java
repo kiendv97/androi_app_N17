@@ -1,12 +1,17 @@
 package com.example.quizapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 public class QuizActivity extends AppCompatActivity {
 
@@ -21,6 +26,7 @@ public class QuizActivity extends AppCompatActivity {
     private String mAnswer;
     private int mScore = 0;
     private int mQuestionNumber = 0;
+    private  TextView countTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +34,7 @@ public class QuizActivity extends AppCompatActivity {
         setContentView(R.layout.activity_quiz);
        // setContentView(R.layout.layout_lesson);
 
-
+        countTimer = (TextView) findViewById(R.id.countTime);
         mScoreView = (TextView)findViewById(R.id.score);
         mQuestionView = (TextView)findViewById(R.id.question);
         mButtonChoice1 = (Button)findViewById(R.id.choice1);
@@ -37,6 +43,8 @@ public class QuizActivity extends AppCompatActivity {
         mButtonChoiceQuit = (Button) findViewById(R.id.quit);
 
         updateQuestion();
+        startCountTime();
+    // start time
 
         //Start of Button Listener for Button1
         mButtonChoice1.setOnClickListener(new View.OnClickListener(){
@@ -105,16 +113,31 @@ public class QuizActivity extends AppCompatActivity {
 
         //End of Button Listener for Button3
 
-
     mButtonChoiceQuit.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(QuizActivity.this, LessonActivity.class);
-            Toast.makeText(QuizActivity.this, "Quited", Toast.LENGTH_SHORT).show();
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.putExtra("EXIT", true);
-            startActivity(intent);
-            finish();
+            AlertDialog.Builder builder = new AlertDialog.Builder(QuizActivity.this);
+            builder.setMessage("Ban cho chac chan muon thoat")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(QuizActivity.this, LessonActivity.class);
+                            Toast.makeText(QuizActivity.this, "Quited", Toast.LENGTH_SHORT).show();
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.putExtra("EXIT", true);
+                            startActivity(intent);
+                            finish();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            return;
+                        }
+                    });
+            builder.create();
+            builder.show();
+
         }
     });
 
@@ -138,5 +161,58 @@ public class QuizActivity extends AppCompatActivity {
 
     private void updateScore(int point) {
         mScoreView.setText("" + mScore);
+    }
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(QuizActivity.this);
+        builder.setMessage("Ban cho chac chan muon thoat")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(QuizActivity.this, LessonActivity.class);
+                        Toast.makeText(QuizActivity.this, "Quited", Toast.LENGTH_SHORT).show();
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.putExtra("EXIT", true);
+                        startActivity(intent);
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        return;
+                    }
+                });
+        builder.create();
+        builder.show();
+
+    }
+    public  void startCountTime() {
+        CountDownTimer countDownTimer = new CountDownTimer(900000,1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                countTimer.setText(String.valueOf( millisUntilFinished / 1000));
+            }
+
+            @Override
+            public void onFinish() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(QuizActivity.this);
+                builder.setMessage("Het gio")
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(QuizActivity.this, LessonActivity.class);
+                                Toast.makeText(QuizActivity.this, "Quited", Toast.LENGTH_SHORT).show();
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                intent.putExtra("EXIT", true);
+                                startActivity(intent);
+                                finish();
+                            }
+                        });
+
+                builder.create();
+                builder.show();
+            }
+        }.start();
     }
 }

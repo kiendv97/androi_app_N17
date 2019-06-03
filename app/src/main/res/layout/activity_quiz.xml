@@ -10,24 +10,61 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:layout_marginBottom="40dp">
+        android:layout_marginBottom="40dp"
+        android:padding="8dp">
 
         <TextView
+            android:id="@+id/txtAmountQuestion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Score"
-            android:textSize="20sp"
-            android:layout_alignParentLeft="true"
-            android:id="@+id/score_text"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/score"
             android:layout_alignParentRight="true"
+            android:layout_marginRight="0dp"
+            android:text="  /15"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/countTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="185dp"
+            android:text="00:00"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/countQuestion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="35dp"
             android:text="0"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/countQuestion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="263dp"
+            android:text="Question"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/score_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="Score"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="325dp"
+            android:text="0"
+            android:textSize="20sp" />
 
     </RelativeLayout>
 

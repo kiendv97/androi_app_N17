@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/timeToExam"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:weightSum="3"
+    android:background="@drawable/ptit2"
+    android:padding="@dimen/default_gap"
+    tools:context=".time_to_exam">
+
+
+    <Button
+        android:id="@+id/btnTime1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="#EEDBDB"
+        android:layout_gravity="center"
+        android:text="15 phút" />
+
+    <Button
+        android:id="@+id/btnTime2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:background="#3F51B5"
+        android:text="30 phút" />
+
+    <Button
+        android:id="@+id/btnTime3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:background="#9E4343"
+        android:text="45 phút" />
+</LinearLayout>

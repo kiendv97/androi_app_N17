@@ -10,7 +10,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.example.quizapp.Service.fetch_data;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Calendar;
 
 public class Login extends AppCompatActivity {
@@ -26,7 +36,9 @@ public class Login extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(idUser.getText() != null && !idUser.getText().equals("")) {
+                if(idUser.getText() != null || !idUser.getText().equals("")) {
+                    fetch_data ft = new fetch_data();
+                    ft.execute();
                     startActivity(new Intent(Login.this, MainActivity.class));
                     Intent intent = new Intent(Login.this
                             , AlarmNotificationReceiver.class);
@@ -38,9 +50,9 @@ public class Login extends AppCompatActivity {
                     calendar.set(Calendar.HOUR_OF_DAY,20);
                     calendar.set(Calendar.MINUTE,29);
                     AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-
                     alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-                }
+
+                } else Toast.makeText(Login.this, "please input your student_id", Toast.LENGTH_SHORT).show();
             }
         });
     }

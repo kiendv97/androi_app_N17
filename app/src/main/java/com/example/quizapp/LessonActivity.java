@@ -1,5 +1,6 @@
 package com.example.quizapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
@@ -22,6 +23,16 @@ public class LessonActivity  extends AppCompatActivity {
         lvLesson.setAdapter(lessonAdapter);
 
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(LessonActivity.this, MainActivity.class);
+
+        startActivity(intent);
+        finish();
+        super.onBackPressed();
+    }
+
     public void convert(){
         lvLesson = (ListView) findViewById(R.id.listview);
         lessonLibaries =  new ArrayList<LessonLibary>();
