@@ -47,8 +47,8 @@ public class Login extends AppCompatActivity {
                     Calendar calendar = Calendar.getInstance();
                     // Alarm
                     //  calendar.set(Calendar.DATE, 6);
-                    calendar.set(Calendar.HOUR_OF_DAY,20);
-                    calendar.set(Calendar.MINUTE,29);
+                    calendar.set(Calendar.HOUR_OF_DAY,16);
+                    calendar.set(Calendar.MINUTE,47);
                     AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
                     alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 
