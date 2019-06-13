@@ -25,8 +25,8 @@ public class AlarmNotificationReceiver extends BroadcastReceiver {
         Uri notifacationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notiBuilder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("Thông báo lịch học")
-                .setContentText("Thông báo lịch học ")
+                .setContentTitle("Thông báo lịch họcx")
+                .setContentText("Thông báo lịch họcx ")
                 .setAutoCancel(true)
                 .setSound(notifacationSound)
                 .setContentIntent(pendingIntent);

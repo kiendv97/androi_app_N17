@@ -39,7 +39,7 @@ public class time_to_exam extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(time_to_exam.this, LessonActivity.class);
-        startActivity(intent );
+        startActivity(intent);
         finish();
         super.onBackPressed();
     }

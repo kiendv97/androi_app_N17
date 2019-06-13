@@ -2,6 +2,7 @@ package com.example.quizapp.Service;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,11 +13,19 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class fetch_data extends AsyncTask<Void,Void,Void> {
+    public CallBackData delegate = null;
     String data;
+    String URI;
+    Object payload;
+    public fetch_data(String URI, Object payload) {
+        this.URI = URI;
+        this.payload = payload;
+    }
+
     @Override
     protected Void doInBackground(Void... voids) {
         try {
-            URL url = new URL("https://api.myjson.com/bins/15zock");
+            URL url = new URL(URI);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             InputStream inputStream = httpURLConnection.getInputStream();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -36,7 +45,15 @@ public class fetch_data extends AsyncTask<Void,Void,Void> {
 
     @Override
     protected void onPostExecute(Void aVoid) {
-        super.onPostExecute(aVoid);
-        Log.d("Execute", data);
+        try {
+            Log.d("Execute", data);
+            delegate.onReceiveData(data);
+        }catch (NullPointerException ex) {
+            ex.printStackTrace();
+        }
+
+
     }
+
+
 }
