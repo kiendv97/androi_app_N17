@@ -89,6 +89,8 @@ public class TargetAdapter extends BaseAdapter {
         }
         Target target =  targetList.get(i);
         holder.txtDate.setText(target.getDate());
+        // https://stackoverflow.com/questions/20988905/long-press-on-selected-text-in-textview-in-android/20988922
+      //  holder.txtDate.setOnLongClickListener();
         holder.txtLesson.setText(target.getLesson());
         holder.txtTarget.setText(Integer.toString(target.getSoccer()));
 //        holder.image.setImageResource(target.getImageResource());

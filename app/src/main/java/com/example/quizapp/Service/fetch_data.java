@@ -29,12 +29,13 @@ public class fetch_data extends AsyncTask<Void,Void,Void> {
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             InputStream inputStream = httpURLConnection.getInputStream();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            String line = "";
-            while(line != null) {
-                line = bufferedReader.readLine();
-                data += line;
-            }
-
+//            String line = "";
+//            while(line != null ) {
+//                Log.d("Runner", bufferedReader.readLine());
+//                line = bufferedReader.readLine();
+//                data += line;
+//            }
+    data = bufferedReader.readLine();
         }catch (MalformedURLException e) {
         e.printStackTrace();
         } catch (IOException e) {
@@ -46,9 +47,9 @@ public class fetch_data extends AsyncTask<Void,Void,Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         try {
-            Log.d("Execute", data);
+
             delegate.onReceiveData(data);
-        }catch (NullPointerException ex) {
+        }catch (Exception ex) {
             ex.printStackTrace();
         }
 

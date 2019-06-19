@@ -18,16 +18,26 @@
             android:layout_height="match_parent" />
 
         <android.support.design.widget.FloatingActionButton
-            android:onClick="addCalendar"
+            android:onClick="saveCalendar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_margin="16dp"
-            android:src="@drawable/ic_add_alarm_black_24dp"
-            android:tint="@android:color/white"
-         />
+            android:src="@drawable/ic_note_add_black_24dp"
+
+            />  <android.support.design.widget.FloatingActionButton
+        android:onClick="addCalendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_add_alarm_black_24dp"
+        android:tint="@android:color/white"
+        />
 
     </RelativeLayout>
 

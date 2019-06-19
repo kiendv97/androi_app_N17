@@ -16,22 +16,29 @@ public class amount_to_test extends AppCompatActivity {
         btnAmount2 = (Button) findViewById(R.id.btnAmount2);
         btnAmount3 = (Button) findViewById(R.id.btnAmount3);
 
+
         btnAmount1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(amount_to_test.this, time_to_exam.class));
+                Intent intent = new Intent(getBaseContext(), time_to_exam.class);
+                intent.putExtra("amount",15);
+                startActivity(new Intent(intent));
             }
         });
         btnAmount2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(amount_to_test.this, time_to_exam.class));
+                Intent intent = new Intent(getBaseContext(), time_to_exam.class);
+                intent.putExtra("amount",30);
+                startActivity(new Intent(intent));
             }
         });
         btnAmount3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(amount_to_test.this, time_to_exam.class));
+                Intent intent = new Intent(getBaseContext(), time_to_exam.class);
+                intent.putExtra("amount",45);
+                startActivity(new Intent(intent));
             }
         });
     }

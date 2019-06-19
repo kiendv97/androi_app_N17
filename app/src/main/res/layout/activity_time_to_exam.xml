@@ -18,7 +18,7 @@
         android:layout_weight="1"
         android:background="#EEDBDB"
         android:layout_gravity="center"
-        android:text="15 phút" />
+        android:text="5 phút" />
 
     <Button
         android:id="@+id/btnTime2"
@@ -27,7 +27,7 @@
         android:layout_weight="1"
         android:layout_gravity="center"
         android:background="#3F51B5"
-        android:text="30 phút" />
+        android:text="10 phút" />
 
     <Button
         android:id="@+id/btnTime3"
@@ -36,5 +36,5 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         android:background="#9E4343"
-        android:text="45 phút" />
+        android:text="15 phút" />
 </LinearLayout>

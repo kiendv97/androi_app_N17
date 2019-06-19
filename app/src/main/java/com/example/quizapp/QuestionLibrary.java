@@ -1,27 +1,50 @@
 package com.example.quizapp;
 
 
-public class QuestionLibrary {
+import android.util.Log;
 
+import com.example.quizapp.Service.CallBackData;
+import com.example.quizapp.Service.fetch_data;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+public class QuestionLibrary  implements CallBackData  {
+    JSONObject data ;
+    JSONArray arrj;
+    fetch_data ft = new fetch_data("http://192.168.1.16:3000/cauhoi",null);
+    public QuestionLibrary() {
+    ft.delegate = this;
+    ft.execute();
+    }
+    @Override
+    public void onReceiveData(String data) {
+
+
+
+    }
+    private String mQuestions1 [] = new String[4];
     private String mQuestions [] = {
-            "Which part of the plant holds it in the soil?",
-            "This part of the plant absorbs energy from the sun.",
-            "This part of the plant attracts bees, butterflies and hummingbirds.",
-            "The _______ holds the plant upright."
+            "An ninh mạng là gì?",
+             "Tại sao lại phải dùng giám sát mạng",
+             "Đâu là một phần của an toàn mạng",
+                "Vật chất không ____"
+
 
     };
 
 
     private String mChoices [][] = {
-            {"Roots", "Stem", "Flower"},
-            {"Fruit", "Leaves", "Seeds"},
-            {"Bark", "Flower", "Roots"},
-            {"Flower", "Leaves", "Stem"}
+            {"Một hệ thống", "System Security", "Flower"},
+                        {"Vì sự an toàn", "Kiểm tra hệ thống", "Vi phạm policy"},
+                      {"Toàn vẹn", "Sẵn dùng", "A & B"},
+                       {"Mất đi", "Lo lắng", "Sẵn dùng"}
+
     };
 
 
 
-    private String mCorrectAnswers[] = {"Roots", "Leaves", "Flower", "Stem"};
+    private String mCorrectAnswers[] = {"Kiểm tra hệ thống", "A & B", "Flower", "Lo lắng"};
 
 
 
@@ -55,5 +78,6 @@ public class QuestionLibrary {
         String answer = mCorrectAnswers[a];
         return answer;
     }
+
 
 }

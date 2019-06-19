@@ -2,25 +2,35 @@ package com.example.quizapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ListView;
 
+import com.example.quizapp.Service.CallBackData;
+import com.example.quizapp.Service.fetch_data;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class LessonActivity  extends AppCompatActivity {
-
+public class LessonActivity  extends AppCompatActivity implements CallBackData {
+    JSONObject data;
     ListView lvLesson;
     ArrayList<LessonLibary> lessonLibaries;
     lessonAdapter lessonAdapter;
-
+    fetch_data ft = new fetch_data("http://192.168.1.16:3000/monhoc",null);
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_lesson);
+      ft.delegate = this;
+      ft.execute();
+    //  convert();
 
-    convert();
-    lessonAdapter  = new lessonAdapter(this,R.layout.layout_lesson,lessonLibaries);
-        lvLesson.setAdapter(lessonAdapter);
+
 
     }
 
@@ -32,22 +42,38 @@ public class LessonActivity  extends AppCompatActivity {
         finish();
         super.onBackPressed();
     }
+    @Override
+    public void onReceiveData(String data) throws Exception {
+        this.data = new JSONObject(data);
 
+        Log.d("JSON",  this.data.toString());
+        convert();
+    }
     public void convert(){
-        lvLesson = (ListView) findViewById(R.id.listview);
-        lessonLibaries =  new ArrayList<LessonLibary>();
+        try {
 
-        lessonLibaries.add(new LessonLibary("Triết học","30",R.drawable.triethoc));
-        lessonLibaries.add(new LessonLibary("Toán rời rạc","20",R.drawable.toanroirac));
-        lessonLibaries.add(new LessonLibary("Giám sát mạng","10",R.drawable.giamsatmang));
-        lessonLibaries.add(new LessonLibary("Triết học","30",R.drawable.triethoc));
-        lessonLibaries.add(new LessonLibary("Toán rời rạc","20",R.drawable.toanroirac));
-        lessonLibaries.add(new LessonLibary("Giám sát mạng","10",R.drawable.giamsatmang));
-        lessonLibaries.add(new LessonLibary("Triết học","30",R.drawable.triethoc));
-        lessonLibaries.add(new LessonLibary("Toán rời rạc","20",R.drawable.toanroirac));
-        lessonLibaries.add(new LessonLibary("Giám sát mạng","10",R.drawable.giamsatmang));
-        lessonLibaries.add(new LessonLibary("Phân tích thiết kế hệ thống","100",R.drawable.dientuso));
+            lessonLibaries =  new ArrayList<LessonLibary>();
+            Log.d("JSON1",data.toString());
+            JSONArray arrj = new JSONArray(data.get("monhoc").toString());
+for (int i =0 ;i < arrj.length(); i ++ ) {
+    JSONObject x= new JSONObject(arrj.opt(i).toString());
+
+        lessonLibaries.add(new LessonLibary(x.getString("nameLesson"),x.getString("amount"),  getResources().getIdentifier(x.getString("picture"), "drawable", getPackageName())));
+
+}
+
+
+            lessonAdapter  = new lessonAdapter(this,R.layout.layout_lesson,lessonLibaries);
+            lvLesson = (ListView) findViewById(R.id.listview);
+            lvLesson.setAdapter(lessonAdapter);
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
 
     }
+
+
 }

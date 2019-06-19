@@ -8,6 +8,7 @@ import android.widget.Button;
 
 public class time_to_exam extends AppCompatActivity {
     private Button btnTime1,btnTime2,btnTime3;
+    int amount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -15,23 +16,32 @@ public class time_to_exam extends AppCompatActivity {
         btnTime1 = (Button) findViewById(R.id.btnTime1);
         btnTime2 = (Button) findViewById(R.id.btnTime2);
         btnTime3 = (Button) findViewById(R.id.btnTime3);
-
+         amount = getIntent().getIntExtra("amount",0);
         btnTime1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(time_to_exam.this, QuizActivity.class));
+                Intent intent = new Intent(getBaseContext(), QuizActivity.class);
+                intent.putExtra("amount",amount);
+                intent.putExtra("time",5);
+                startActivity(new Intent(intent));
             }
         });
         btnTime2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(time_to_exam.this, QuizActivity.class));
+                Intent intent = new Intent(getBaseContext(), QuizActivity.class);
+                intent.putExtra("amount",amount);
+                intent.putExtra("time",10);
+                startActivity(new Intent(intent));
             }
         });
         btnTime3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(time_to_exam.this, QuizActivity.class));
+                Intent intent = new Intent(getBaseContext(), QuizActivity.class);
+                intent.putExtra("amount",amount);
+                intent.putExtra("time",15);
+                startActivity(new Intent(intent));
             }
         });
     }

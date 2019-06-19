@@ -18,7 +18,9 @@ public class QuizActivity extends AppCompatActivity {
     private QuestionLibrary mQuestionLibrary = new QuestionLibrary();
 
     private TextView mScoreView;
+    private TextView mCountQuestion;
     private TextView mQuestionView;
+    private TextView txtAmountQuestion;
     private Button mButtonChoice1;
     private Button mButtonChoice2;
     private Button mButtonChoice3;
@@ -26,6 +28,7 @@ public class QuizActivity extends AppCompatActivity {
     private String mAnswer;
     private int mScore = 0;
     private int mQuestionNumber = 0;
+    private int mCountQs = 0;
     private  TextView countTimer;
 
     @Override
@@ -33,9 +36,10 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
        // setContentView(R.layout.layout_lesson);
-
+        txtAmountQuestion = (TextView) findViewById(R.id.txtAmountQuestion);
         countTimer = (TextView) findViewById(R.id.countTime);
         mScoreView = (TextView)findViewById(R.id.score);
+        mCountQuestion = (TextView)findViewById(R.id.countQuestion);
         mQuestionView = (TextView)findViewById(R.id.question);
         mButtonChoice1 = (Button)findViewById(R.id.choice1);
         mButtonChoice2 = (Button)findViewById(R.id.choice2);
@@ -153,6 +157,29 @@ public class QuizActivity extends AppCompatActivity {
 
             mAnswer = mQuestionLibrary.getCorrectAnswer(mQuestionNumber);
             mQuestionNumber++;
+            if(mCountQs < getIntent().getIntExtra("amount",10)) {
+                mCountQs++;
+                mCountQuestion.setText("" + mCountQs);
+
+            } else {
+                AlertDialog.Builder builder = new AlertDialog.Builder(QuizActivity.this);
+                builder.setMessage("Hoan thanh")
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(QuizActivity.this, LessonActivity.class);
+                                Toast.makeText(QuizActivity.this, "Quited", Toast.LENGTH_SHORT).show();
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                intent.putExtra("EXIT", true);
+                                startActivity(intent);
+                                finish();
+                            }
+                        });
+
+                builder.create();
+                builder.show();
+            }
+
         } else {
 
             mQuestionNumber = 0;
@@ -162,6 +189,7 @@ public class QuizActivity extends AppCompatActivity {
     private void updateScore(int point) {
         mScoreView.setText("" + mScore);
     }
+
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(QuizActivity.this);
@@ -188,7 +216,8 @@ public class QuizActivity extends AppCompatActivity {
 
     }
     public  void startCountTime() {
-        CountDownTimer countDownTimer = new CountDownTimer(900000,1000) {
+        txtAmountQuestion.setText("/" + getIntent().getIntExtra("amount",10));
+        CountDownTimer countDownTimer = new CountDownTimer(getIntent().getIntExtra("time",10) * 60000,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 countTimer.setText(String.valueOf( millisUntilFinished / 1000));

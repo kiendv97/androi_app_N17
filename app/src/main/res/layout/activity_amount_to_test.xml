@@ -19,7 +19,7 @@
             android:layout_weight="1"
             android:background="#EEDBDB"
             android:layout_gravity="center"
-            android:text="5 Câu" />
+            android:text="15 Câu" />
 
         <Button
             android:id="@+id/btnAmount2"
@@ -28,7 +28,7 @@
             android:layout_weight="1"
             android:layout_gravity="center"
             android:background="#3F51B5"
-            android:text="10 Câu " />
+            android:text="30 Câu " />
 
         <Button
             android:id="@+id/btnAmount3"
@@ -37,7 +37,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="#9E4343"
-            android:text="15 C" />
+            android:text="45 Câu " />
     </LinearLayout>
 
 
