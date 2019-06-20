@@ -88,8 +88,10 @@ public  void exe( JSONObject json) {
 
 
                             if(idUser.getText().toString().equals("b15dcat103") || idUser.getText().toString().equals("b15dcat107")) {
+                                Intent intent1 = new Intent(Login.this, MainActivity.class);
+                                intent1.putExtra("idUser", idUser.getText().toString());
+                                startActivity(intent1);
 
-                                startActivity(new Intent(Login.this, MainActivity.class));
                                 Intent intent = new Intent(Login.this
                                         , AlarmNotificationReceiver.class)   ;
 

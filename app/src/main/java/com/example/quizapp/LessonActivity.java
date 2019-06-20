@@ -21,11 +21,12 @@ public class LessonActivity  extends AppCompatActivity implements CallBackData {
     ListView lvLesson;
     ArrayList<LessonLibary> lessonLibaries;
     lessonAdapter lessonAdapter;
-    fetch_data ft = new fetch_data("http://192.168.1.16:3000/monhoc",null);
+    fetch_data ft ;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_lesson);
+       ft = new fetch_data("http://192.168.1.16:3000/monhoc",null);
       ft.delegate = this;
       ft.execute();
     //  convert();

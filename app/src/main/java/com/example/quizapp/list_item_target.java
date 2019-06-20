@@ -70,10 +70,10 @@ public class list_item_target extends AppCompatActivity implements CallBackData 
     this.data = new JSONObject(data);
         convert();
     }
-    public  void saveCalendar(View view) {
 
-    }
 
     public void addCalendar(View view) {
+        Intent intent = new Intent(getBaseContext(), setAlarm.class);
+        startActivity(intent);
     }
 }

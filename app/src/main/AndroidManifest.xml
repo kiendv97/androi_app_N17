@@ -12,7 +12,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".amount_to_test"></activity>
+        <activity android:name=".profile_activity" />
+        <activity android:name=".amount_to_test" />
         <activity android:name=".time_to_exam" />
         <activity android:name=".list_item_target" />
         <activity android:name=".setAlarm" />

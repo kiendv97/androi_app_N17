@@ -63,7 +63,7 @@ public class lessonAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     private  class ViewHolder {
@@ -72,7 +72,8 @@ public class lessonAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup parent) {
+    public View getView(int i1, View view, ViewGroup parent) {
+        final int i = i1;
     ViewHolder holder = new ViewHolder();
      if(view == null ){
          LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -96,29 +97,31 @@ public class lessonAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
 
-                AllOnClick(v);
+                AllOnClick(i,v);
             }
         });
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                AllOnClick(v);
+                AllOnClick(i,v);
             }
         });
         holder.txtDes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                AllOnClick(v);
+                AllOnClick(i,v);
             }
         });
 
         return view;
     }
-    public void AllOnClick(View v){
+    public void AllOnClick(int i, View v){
       //  Toast.makeText(v.getContext(),"next screen", Toast.LENGTH_SHORT).show();
-        context.startActivity(new Intent(v.getContext(),amount_to_test.class));
+        Intent intent = new Intent(v.getContext(),amount_to_test.class);
+        intent.putExtra("idMon", i);
+        context.startActivity(intent);
 
     }
 }

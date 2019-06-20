@@ -34,8 +34,10 @@ public class MainActivity extends AppCompatActivity {
         btnNoti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "noti", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(MainActivity.this,sendNoti.class));
+                Toast.makeText(MainActivity.this, "profile", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this,profile_activity.class);
+                intent.putExtra("idUser",getIntent().getStringExtra("idUser"));
+                startActivity(intent);
             }
         });
         btnSetAlarm.setOnClickListener(new View.OnClickListener() {

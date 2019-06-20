@@ -22,6 +22,7 @@ public class amount_to_test extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), time_to_exam.class);
                 intent.putExtra("amount",15);
+                intent.putExtra("idMon",getIntent().getIntExtra("idMon",1));
                 startActivity(new Intent(intent));
             }
         });
@@ -30,6 +31,7 @@ public class amount_to_test extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), time_to_exam.class);
                 intent.putExtra("amount",30);
+                intent.putExtra("idMon",getIntent().getIntExtra("idMon",1));
                 startActivity(new Intent(intent));
             }
         });
@@ -38,6 +40,7 @@ public class amount_to_test extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), time_to_exam.class);
                 intent.putExtra("amount",45);
+                intent.putExtra("idMon",getIntent().getIntExtra("idMon",1));
                 startActivity(new Intent(intent));
             }
         });

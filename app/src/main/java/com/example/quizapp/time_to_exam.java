@@ -9,6 +9,7 @@ import android.widget.Button;
 public class time_to_exam extends AppCompatActivity {
     private Button btnTime1,btnTime2,btnTime3;
     int amount;
+    int idMon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -17,12 +18,14 @@ public class time_to_exam extends AppCompatActivity {
         btnTime2 = (Button) findViewById(R.id.btnTime2);
         btnTime3 = (Button) findViewById(R.id.btnTime3);
          amount = getIntent().getIntExtra("amount",0);
+         idMon = getIntent().getIntExtra("idMon",0);
         btnTime1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), QuizActivity.class);
                 intent.putExtra("amount",amount);
                 intent.putExtra("time",5);
+                intent.putExtra("idMon",idMon);
                 startActivity(new Intent(intent));
             }
         });
@@ -31,6 +34,7 @@ public class time_to_exam extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), QuizActivity.class);
                 intent.putExtra("amount",amount);
+                intent.putExtra("idMon",idMon);
                 intent.putExtra("time",10);
                 startActivity(new Intent(intent));
             }
@@ -40,6 +44,7 @@ public class time_to_exam extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), QuizActivity.class);
                 intent.putExtra("amount",amount);
+                intent.putExtra("idMon",idMon);
                 intent.putExtra("time",15);
                 startActivity(new Intent(intent));
             }

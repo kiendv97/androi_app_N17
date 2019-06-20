@@ -10,47 +10,59 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class QuestionLibrary  implements CallBackData  {
-    JSONObject data ;
-    JSONArray arrj;
-    fetch_data ft = new fetch_data("http://192.168.1.16:3000/cauhoi",null);
-    public QuestionLibrary() {
+    JSONObject data = new JSONObject();
+    fetch_data ft ;
+     String mQuestions [] = new String[50];
+    String mChoices [][] = new String[50][3];
+    String mCorrectAnswers[] = new String[50];
+//    private String mChoices [][] = {
+//            {"Một hệ thống", "System Security", "Flower"},
+//            {"Vì sự an toàn", "Kiểm tra hệ thống", "Vi phạm policy"},
+//            {"Toàn vẹn", "Sẵn dùng", "A & B"},
+//            {"Mất đi", "Lo lắng", "Sẵn dùng"}
+//
+//    };
+//
+//
+//
+//    private String mCorrectAnswers[] = {"Kiểm tra hệ thống", "A & B", "Flower", "Lo lắng"};
+
+
+
+    public QuestionLibrary(int idMon) {
+        ft = new fetch_data("http://192.168.1.16:3000/cauhoi/" + idMon,null);
     ft.delegate = this;
     ft.execute();
+
     }
+
     @Override
-    public void onReceiveData(String data) {
+    public void onReceiveData(String onData) throws Exception {
+        this.data = new JSONObject(onData);
+        Log.d("123",onData);
+        JSONArray arrQ = new JSONArray(data.get("questions").toString());
+        JSONArray arrC = new JSONArray(data.get("answers").toString());
+        JSONArray arrA = new JSONArray(data.get("correctAnswers").toString());
+        Log.d("123",arrQ.toString());
+        mQuestions[0] = arrQ.optString(0);
+        for(int i = 1;i < 50; i++)  {
+            mQuestions[i] = arrQ.optString(i%(arrQ.length()));
+            mCorrectAnswers[i] = arrA.optString(i%(arrA.length()));
+            for (int j = 0 ; j<  3; j++) {
+                mChoices[i][j] = arrC.optJSONArray(i%(arrQ.length())).optString(j);
+            }
 
+
+
+        }
 
 
     }
-    private String mQuestions1 [] = new String[4];
-    private String mQuestions [] = {
-            "An ninh mạng là gì?",
-             "Tại sao lại phải dùng giám sát mạng",
-             "Đâu là một phần của an toàn mạng",
-                "Vật chất không ____"
-
-
-    };
-
-
-    private String mChoices [][] = {
-            {"Một hệ thống", "System Security", "Flower"},
-                        {"Vì sự an toàn", "Kiểm tra hệ thống", "Vi phạm policy"},
-                      {"Toàn vẹn", "Sẵn dùng", "A & B"},
-                       {"Mất đi", "Lo lắng", "Sẵn dùng"}
-
-    };
-
-
-
-    private String mCorrectAnswers[] = {"Kiểm tra hệ thống", "A & B", "Flower", "Lo lắng"};
-
 
 
 
     public String getQuestion(int a) {
-        String question = mQuestions[a];
+        String question = mQuestions[a + 1];
         return question;
     }
 

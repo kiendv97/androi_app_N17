@@ -15,7 +15,7 @@ import org.w3c.dom.Text;
 
 public class QuizActivity extends AppCompatActivity {
 
-    private QuestionLibrary mQuestionLibrary = new QuestionLibrary();
+    private QuestionLibrary mQuestionLibrary ;
 
     private TextView mScoreView;
     private TextView mCountQuestion;
@@ -45,7 +45,7 @@ public class QuizActivity extends AppCompatActivity {
         mButtonChoice2 = (Button)findViewById(R.id.choice2);
         mButtonChoice3 = (Button)findViewById(R.id.choice3);
         mButtonChoiceQuit = (Button) findViewById(R.id.quit);
-
+        mQuestionLibrary= new QuestionLibrary(getIntent().getIntExtra("idMon", 1));
         updateQuestion();
         startCountTime();
     // start time
