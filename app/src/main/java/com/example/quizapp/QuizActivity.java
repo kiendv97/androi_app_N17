@@ -6,14 +6,18 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.quizapp.Service.*;
+
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
-public class QuizActivity extends AppCompatActivity {
+public class QuizActivity extends AppCompatActivity  {
 
     private QuestionLibrary mQuestionLibrary ;
 
@@ -149,7 +153,9 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void updateQuestion() {
+
         if (mQuestionNumber < mQuestionLibrary.getLength()) {
+          //  Log.d("string",mQuestionLibrary.getQuestion(1));
             mQuestionView.setText(mQuestionLibrary.getQuestion(mQuestionNumber));
             mButtonChoice1.setText(mQuestionLibrary.getChoice1(mQuestionNumber));
             mButtonChoice2.setText(mQuestionLibrary.getChoice2(mQuestionNumber));
@@ -167,12 +173,23 @@ public class QuizActivity extends AppCompatActivity {
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(QuizActivity.this, LessonActivity.class);
-                                Toast.makeText(QuizActivity.this, "Quited", Toast.LENGTH_SHORT).show();
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                intent.putExtra("EXIT", true);
-                                startActivity(intent);
-                                finish();
+                                try {
+
+                                    Intent intent = new Intent(QuizActivity.this, LessonActivity.class);
+                                    Toast.makeText(QuizActivity.this, "Quited", Toast.LENGTH_SHORT).show();
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    intent.putExtra("EXIT", true);
+                                    JSONObject jsonObject = new JSONObject();
+                                    jsonObject.put("monhoc",getIntent().getIntExtra("idMon",1));
+                                    jsonObject.put("soccer",mScore);
+                                    post_data pd = new post_data("http://192.168.1.16:3000/history",jsonObject);
+                                    pd.execute();
+                                    startActivity(intent);
+                                    finish();
+                                }catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+
                             }
                         });
 
@@ -212,7 +229,7 @@ public class QuizActivity extends AppCompatActivity {
                     }
                 });
         builder.create();
-        builder.show();
+      //  builder.show();
 
     }
     public  void startCountTime() {
@@ -230,17 +247,28 @@ public class QuizActivity extends AppCompatActivity {
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(QuizActivity.this, LessonActivity.class);
-                                Toast.makeText(QuizActivity.this, "Quited", Toast.LENGTH_SHORT).show();
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                intent.putExtra("EXIT", true);
-                                startActivity(intent);
-                                finish();
+                                try {
+                                    Intent intent = new Intent(QuizActivity.this, LessonActivity.class);
+                                    Toast.makeText(QuizActivity.this, "Quited", Toast.LENGTH_SHORT).show();
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    intent.putExtra("EXIT", true);
+                                    JSONObject jsonObject = new JSONObject();
+                                    jsonObject.put("monhoc",getIntent().getIntExtra("idMon",1));
+                                    jsonObject.put("soccer",mScore);
+                                    post_data pd = new post_data("http://192.168.1.16:3000/history",jsonObject);
+                                    pd.execute();
+                                    startActivity(intent);
+                                    finish();
+                                }catch (Exception e) {
+
+                                }
+
+
                             }
                         });
 
                 builder.create();
-                builder.show();
+//                builder.show();
             }
         }.start();
     }

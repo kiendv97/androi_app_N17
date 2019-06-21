@@ -31,7 +31,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/monhoc"
             android:layout_width="15dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -55,10 +55,11 @@
             android:layout_width="22dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:ems="10"
             android:defaultFocusHighlightEnabled="true"
-            android:visibility="visible"
-            android:inputType="number" />
+            android:ems="10"
+            android:inputType="number"
+            android:text="0"
+            android:visibility="visible" />
 
     </LinearLayout>
 
