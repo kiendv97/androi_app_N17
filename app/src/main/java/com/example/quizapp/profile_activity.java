@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.quizapp.Service.*;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -57,13 +58,15 @@ public class profile_activity extends AppCompatActivity implements CallBackData 
     }
     public void initData(JSONObject json) throws Exception{
 //        lay du lieu do vao view
-        lstP.add(new PointDTO("Triết học","10đ"));
-        lstP.add(new PointDTO("An toàn mạng","20đ"));
-        lstP.add(new PointDTO("Giám sát mạng","30đ"));
+        JSONArray jsonArray = new JSONArray(json.get("histories").toString());
+        for (int i = 0 ;i< jsonArray.length(); i++ ) {
+            JSONObject jsonObject = new JSONObject(jsonArray.optJSONObject(i).toString());
+            lstP.add(new PointDTO(jsonObject.getString("nameLesson"),String.valueOf(jsonObject.getInt("soccer"))));
+        }
 
        hoten.setText(json.getString("name"));
 
-        masv.setText(json.getString("maSV"));
+        masv.setText(json.getString("maSv"));
 
         sdt.setText(json.getString("sdt"));
 

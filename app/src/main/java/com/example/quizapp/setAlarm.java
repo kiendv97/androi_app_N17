@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.AttributeSet;
@@ -80,7 +81,12 @@ Calendar calendar = Calendar.getInstance();
 
 
     }
+    public String loadPrefer(){
+        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+        String score = sharedPreferences.getString("idUser","b15dcat103");
+        return score;
 
+    }
     @Override
     public void onReceiveData(String data) throws Exception {
         this.data = new JSONObject(data);
@@ -108,9 +114,9 @@ Calendar calendar = Calendar.getInstance();
                    String selectedDate = sdf.format(calendar.getTime());
                    Log.d("DDD", String.valueOf(selectedDate));
                    jsonObject.put("date", selectedDate);
-                   jsonObject.put("lesson", spinner.getSelectedItem().toString());
+                   jsonObject.put("idMonhoc", spinner.getSelectedItemPosition());
                    jsonObject.put("soccer",editTarget.getText());
-                   jsonObject.put("id_profile_user",getIntent().getIntExtra("idUser",1));
+                   jsonObject.put("maSv", loadPrefer());
 
 
 

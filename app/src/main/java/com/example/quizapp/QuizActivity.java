@@ -2,6 +2,7 @@ package com.example.quizapp;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AlertDialog;
@@ -180,9 +181,10 @@ public class QuizActivity extends AppCompatActivity  {
                                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     intent.putExtra("EXIT", true);
                                     JSONObject jsonObject = new JSONObject();
-                                    jsonObject.put("monhoc",getIntent().getIntExtra("idMon",1));
+                                    jsonObject.put("idMonhoc",getIntent().getIntExtra("idMon",1));
+                                    jsonObject.put("maSv", loadPrefer());
                                     jsonObject.put("soccer",mScore);
-                                     jsonObject.put("tenmonhoc",getIntent().getStringExtra("tenmonhoc"));
+                                   //  jsonObject.put("nameLesson",getIntent().getStringExtra("tenmonhoc"));
                                     Log.d("tenmonhoc1",getIntent().getStringExtra("tenmonhoc"));
                                     post_data pd = new post_data("http://192.168.1.16:3000/history",jsonObject);
                                     pd.execute();
@@ -204,7 +206,12 @@ public class QuizActivity extends AppCompatActivity  {
             mQuestionNumber = 0;
         }
     }
+    public String loadPrefer(){
+        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+        String score = sharedPreferences.getString("idUser","b15dcat103");
+        return score;
 
+    }
     private void updateScore(int point) {
         mScoreView.setText("" + mScore);
     }
