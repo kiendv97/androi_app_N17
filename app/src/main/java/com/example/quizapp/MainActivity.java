@@ -1,6 +1,10 @@
 package com.example.quizapp;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
@@ -10,20 +14,44 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.quizapp.Service.CallBackData;
+import com.example.quizapp.Service.fetch_data;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CallBackData {
     Button btnTest, btnSetAlarm,btnTarget,btnNoti;
+    ArrayList<PendingIntent> intentArray = new ArrayList<PendingIntent>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getButton();
+        try {
+            String scrope = loadPrefer();
+            if(!getIntent().getStringExtra("idUser").equals("")) {
+                fetch_data ft = new fetch_data("http://192.168.1.16:3000/target/" + scrope,null);
+
+                ft.delegate = this;
+                ft.execute();
+            }
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+
+
         btnTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,18 +71,31 @@ public class MainActivity extends AppCompatActivity {
         btnSetAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,setAlarm.class));
+                Toast.makeText(MainActivity.this, "set alarm", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this,setAlarm.class);
+                intent.putExtra("idUser",getIntent().getStringExtra("idUser"));
+                startActivity(intent);
+               // startActivity(new Intent(MainActivity.this,setAlarm.class));
             }
         });
         btnTarget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,list_item_target.class));
+                Toast.makeText(MainActivity.this, "target", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this,list_item_target.class);
+                intent.putExtra("idUser",getIntent().getStringExtra("idUser"));
+                startActivity(intent);
+              //  startActivity(new Intent(MainActivity.this,list_item_target.class));
             }
         });
     }
     boolean doubleBackToExitPressedOnce = false;
+    public String loadPrefer(){
+        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+        String score = sharedPreferences.getString("idUser","b15dcat103");
+        return score;
 
+    }
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
@@ -77,36 +118,51 @@ public class MainActivity extends AppCompatActivity {
         btnSetAlarm = (Button) findViewById(R.id.btnBook);
         btnTarget = (Button) findViewById(R.id.btnTarget);
         btnNoti = (Button) findViewById(R.id.btnNoti);
-        // builder http connect
-        HttpURLConnection urlConnection;
-        StringBuilder result = new StringBuilder();
-        try {
 
-            URL url = new URL("http://192.168.1.9:3000/test/androi/");
-            urlConnection = (HttpURLConnection) url.openConnection();
-            Log.d("123456", String.valueOf(urlConnection.getResponseCode()));
 
-            urlConnection.setRequestMethod("GET");
-            urlConnection.connect();
-            Log.d("123456", String.valueOf(urlConnection.getResponseCode()));
+    }
 
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+    @Override
+    public void onReceiveData(String data) throws Exception {
+handleNoti(data);
+    }
+    void handleNoti(String data) throws Exception {
+        final JSONObject json  = new JSONObject(data);
+        final JSONArray arrj = new JSONArray(json.get("target").toString());
+        Log.d("Runner", json.toString());
+        Log.d("Runner", arrj.toString());
+        Intent intent = new Intent(MainActivity.this
+                , AlarmNotificationReceiver.class)   ;
+        for (int i = 0 ; i < arrj.length(); i++ ){
+            JSONObject x= new JSONObject(arrj.opt(i).toString());
 
-            Log.d("123456", in.toString());
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                result.append(line);
-            }
-            Log.d("Result: ", result.toString());
-            in.close();
-
-        }catch (Exception ex) {
-            Log.d("BUG-URL", ex.toString());
+            long miliSecsDate = milliseconds (x.getString("date"));
+            Log.d("mili",String.valueOf(miliSecsDate));
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this,i, intent,0);
+            AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+            alarmManager.set(AlarmManager.RTC_WAKEUP,
+                    miliSecsDate,
+                    pendingIntent);
+            intentArray.add(pendingIntent);
         }
-        finally {
-          //  urlConnection.disconnect();
+    }
+    public long milliseconds(String date)
+    {
+        //String date_ = date;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try
+        {
+            Date mDate = sdf.parse(date);
+            long timeInMilliseconds = mDate.getTime();
+            Log.d("Date in milli :: " , String.valueOf(timeInMilliseconds));
+            return timeInMilliseconds;
+        }
+        catch (Exception e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
 
+        return 0;
     }
 }

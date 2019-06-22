@@ -17,6 +17,7 @@ public class lessonAdapter extends BaseAdapter {
     private Context context;
     private int layout;
     private List<LessonLibary> lessonLibaries;
+     String nameLesson;
 
     public lessonAdapter(Context context, int layout, List<LessonLibary> lessonLibaries) {
         this.context = context;
@@ -74,6 +75,7 @@ public class lessonAdapter extends BaseAdapter {
     @Override
     public View getView(int i1, View view, ViewGroup parent) {
         final int i = i1;
+
     ViewHolder holder = new ViewHolder();
      if(view == null ){
          LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -90,6 +92,8 @@ public class lessonAdapter extends BaseAdapter {
 
      }
         LessonLibary lessonLibary =  lessonLibaries.get(i);
+        nameLesson = lessonLibary.getNameLesson();
+
         holder.txtLesson.setText(lessonLibary.getNameLesson());
         holder.txtDes.setText(lessonLibary.getAmount());
         holder.image.setImageResource(lessonLibary.getPicture());
@@ -121,6 +125,7 @@ public class lessonAdapter extends BaseAdapter {
       //  Toast.makeText(v.getContext(),"next screen", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(v.getContext(),amount_to_test.class);
         intent.putExtra("idMon", i);
+        intent.putExtra("tenmonhoc", nameLesson);
         context.startActivity(intent);
 
     }

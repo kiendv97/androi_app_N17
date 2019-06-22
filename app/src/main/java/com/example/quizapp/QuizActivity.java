@@ -182,6 +182,8 @@ public class QuizActivity extends AppCompatActivity  {
                                     JSONObject jsonObject = new JSONObject();
                                     jsonObject.put("monhoc",getIntent().getIntExtra("idMon",1));
                                     jsonObject.put("soccer",mScore);
+                                     jsonObject.put("tenmonhoc",getIntent().getStringExtra("tenmonhoc"));
+                                    Log.d("tenmonhoc1",getIntent().getStringExtra("tenmonhoc"));
                                     post_data pd = new post_data("http://192.168.1.16:3000/history",jsonObject);
                                     pd.execute();
                                     startActivity(intent);
@@ -255,6 +257,7 @@ public class QuizActivity extends AppCompatActivity  {
                                     JSONObject jsonObject = new JSONObject();
                                     jsonObject.put("monhoc",getIntent().getIntExtra("idMon",1));
                                     jsonObject.put("soccer",mScore);
+                                    jsonObject.put("tenmonhoc",getIntent().getStringExtra("tenmonhoc"));
                                     post_data pd = new post_data("http://192.168.1.16:3000/history",jsonObject);
                                     pd.execute();
                                     startActivity(intent);

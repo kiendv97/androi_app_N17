@@ -1,6 +1,7 @@
 package com.example.quizapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,8 +31,8 @@ public class profile_activity extends AppCompatActivity implements CallBackData 
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_activity);
-        fetch_data ft = new fetch_data("http://192.168.1.16:3000/profile/" + getIntent().getStringExtra("idUser"),null);
-
+        String scrope = loadPrefer();
+        fetch_data ft = new fetch_data("http://192.168.1.16:3000/profile/" + scrope,null);
         this.setTitle("Profile");
         hoten = (TextView) findViewById(R.id.hoten);
         masv = (TextView) findViewById(R.id.masv);
@@ -45,6 +46,13 @@ public class profile_activity extends AppCompatActivity implements CallBackData 
         ft.delegate = this;
         ft.execute();
 
+
+
+    }
+    public String loadPrefer(){
+        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+        String score = sharedPreferences.getString("idUser","b15dcat103");
+        return score;
 
     }
     public void initData(JSONObject json) throws Exception{

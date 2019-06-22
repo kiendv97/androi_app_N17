@@ -110,6 +110,7 @@ Calendar calendar = Calendar.getInstance();
                    jsonObject.put("date", selectedDate);
                    jsonObject.put("lesson", spinner.getSelectedItem().toString());
                    jsonObject.put("soccer",editTarget.getText());
+                   jsonObject.put("id_profile_user",getIntent().getIntExtra("idUser",1));
 
 
 

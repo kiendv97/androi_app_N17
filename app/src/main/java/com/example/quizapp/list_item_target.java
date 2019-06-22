@@ -1,6 +1,7 @@
 package com.example.quizapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,7 +31,6 @@ import java.util.List;
 import javax.net.ssl.HttpsURLConnection;
 
 public class list_item_target extends AppCompatActivity implements CallBackData {
-    fetch_data ft = new fetch_data("http://192.168.1.16:3000/target",null);
     ListView listView;
     JSONObject data;
     ArrayList<Target> arrayList;
@@ -39,12 +39,21 @@ public class list_item_target extends AppCompatActivity implements CallBackData 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_item_target);
+        String score = loadPrefer();
+        fetch_data ft = new fetch_data("http://192.168.1.16:3000/target/" + score,null);
+        Log.d("Score",score);
+
         ft.delegate = this;
         ft.execute();
         // convert();
 
     }
+public String loadPrefer(){
+    SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+    String score = sharedPreferences.getString("idUser","b15dcat103");
+    return score;
 
+}
     public void convert() throws  Exception{
 
 
